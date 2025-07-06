@@ -8,10 +8,14 @@
         <p><span class="font-semibold">ผู้เขียน:</span> {{ book.author }}</p>
         <p><span class="font-semibold">ปีที่พิมพ์:</span> {{ book.published_year || 'ไม่ระบุ' }}</p>
         <p><span class="font-semibold">ประเภท:</span> {{ book.genre || 'ไม่ระบุ' }}</p>
+        <p><span class="font-semibold">วันที่พิมพ์:</span> {{ formatDateTime(book.created_at) }}</p>
+        <p><span class="font-semibold">วันที่ได้รับการอัพเดท:</span> {{ formatDateTime(book.updated_at) }}</p>
+        <p><span class="font-semibold">เขียนโดย:</span> {{ book.by || 'ไม่ระบุ' }}</p>
       </div>
 
       <div class="mt-6 flex justify-between">
         <router-link
+        v-if="book.user_id === currentUser?.id"
           :to="`/books/${book.id}/edit`"
           class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
         >
@@ -42,13 +46,29 @@ const id = route.params.id
 const book = ref({})
 const error = ref('')
 
+const currentUser = ref(null)
+
 onMounted(async () => {
   try {
     const res = await API.get(`/books/${id}`)
     book.value = res.data
+
+    const me = await API.get('/me')
+    currentUser.value = me.data
   } catch (err) {
     error.value = 'ไม่สามารถโหลดข้อมูลหนังสือได้'
     console.error(err)
   }
 })
+
+const formatDateTime = (datetimeStr) => {
+  return datetimeStr
+    ? new Date(datetimeStr).toLocaleString('th-TH', {
+        dateStyle: 'long',
+        timeStyle: 'short',
+      })
+    : 'ไม่ระบุ'
+}
+
+
 </script>

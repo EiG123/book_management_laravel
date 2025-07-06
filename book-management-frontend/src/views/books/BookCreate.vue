@@ -16,7 +16,7 @@
 
         <div>
           <label class="block text-gray-700 font-semibold">ปีที่พิมพ์</label>
-          <input v-model="form.published_year" type="number" class="w-full border border-gray-300 rounded px-3 py-2" />
+          <input v-model="form.published_year" type="number" min="0" class="w-full border border-gray-300 rounded px-3 py-2" />
         </div>
 
         <div>
@@ -57,7 +57,7 @@ const error = ref('')
 const submitForm = async () => {
   try {
     await API.post('/books', form.value)
-    router.push('/index') // กลับไปหน้า index
+    router.push('/books') // กลับไปหน้า index
   } catch (err) {
     error.value = 'เกิดข้อผิดพลาดในการบันทึกข้อมูล'
     console.error(err)
