@@ -39,6 +39,7 @@ const register = async () => {
     router.push('/login')
   } catch (error) {
     error.value = 'Register failed'
+    alert('ไม่สามารถสมัครสมาชิกได้')
   }
 }
 </script>

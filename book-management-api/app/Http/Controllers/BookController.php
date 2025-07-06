@@ -27,7 +27,7 @@ class BookController extends Controller
 
         $book = Book::create($validated);
 
-        return response()->json($book, 201)->redirect('/dashboard');
+        return response()->json($book);
     }
 
     // แสดงหนังสือ 1 เล่ม
@@ -38,11 +38,11 @@ class BookController extends Controller
     }
 
     // แสดงฟอร์มแก้ไขหนังสือ
-    public function edit($id)
-    {
-        $book = Book::findOrFail($id);
-        return view('books.edit', compact('book'));
-    }
+    // public function edit($id)
+    // {
+    //     $book = Book::findOrFail($id);
+    //     return view('books.edit', compact('book'));
+    // }
     
     // อัปเดตหนังสือ
     public function update(Request $request, $id)
