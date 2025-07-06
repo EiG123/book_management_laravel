@@ -1,3 +1,9 @@
+/* src/assets/main.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Optional: custom style เพิ่มเติม */
+body {
+  font-family: 'Inter', sans-serif;
+}
