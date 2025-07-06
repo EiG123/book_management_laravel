@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Book;
 
@@ -17,14 +16,16 @@ class BookSeeder extends Seeder
             'title' => 'Clean Code',
             'author' => 'Robert C. Martin',
             'published_year' => 2008,
-            'genre' => 'Programming'
+            'genre' => 'Programming',
+            'user_id' => 1,
         ]);
 
         Book::create([
             'title' => 'Atomic Habits',
             'author' => 'James Clear',
             'published_year' => 2018,
-            'genre' => 'Self-help'
+            'genre' => 'Self-help',
+            'user_id' => 1,
         ]);
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class BookController extends Controller
 {
@@ -25,10 +27,14 @@ class BookController extends Controller
             'genre' => 'nullable|string|max:100',
         ]);
 
-        $book = Book::create($validated);
+        $book = Book::create([
+            ...$validated,
+            'user_id' => Auth::id(),
+        ]);
 
-        return response()->json($book);
+        return response()->json($book, 201);
     }
+
 
     // แสดงหนังสือ 1 เล่ม
     public function show($id)
@@ -43,11 +49,15 @@ class BookController extends Controller
     //     $book = Book::findOrFail($id);
     //     return view('books.edit', compact('book'));
     // }
-    
+
     // อัปเดตหนังสือ
     public function update(Request $request, $id)
     {
         $book = Book::findOrFail($id);
+
+        if ($book->user_id !== Auth::id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
 
         $validated = $request->validate([
             'title' => 'sometimes|required|string|max:255',
@@ -64,6 +74,12 @@ class BookController extends Controller
     // ลบหนังสือ
     public function destroy($id)
     {
+        $book = Book::findOrFail($id);
+
+        if ($book->user_id !== Auth::id()) {
+            return response()->json(['message' => 'ไม่ได้รับอนุญาต'], 403);
+        }
+
         $book = Book::findOrFail($id);
         $book->delete();
 
