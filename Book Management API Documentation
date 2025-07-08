@@ -1,3 +1,12 @@
+ข้อสอบผู้สมัครตำแหน่ง Full Stack Developer
+โจทย์ : ระบบจัดการรายการหนังสือ (Book Management)
+
+Stack ที่ใช้ในโปรเจกต์นี้:
+Backend: Laravel (PHP)
+Frontend: Vue 3 + Tailwind CSS
+API Communication: Axios
+Auth: JWT (ใช้ Bearer Token)
+
 Base URL:http://localhost:8000/api
 
 Authentication : JWT Token
