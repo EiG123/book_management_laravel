@@ -1,0 +1,46 @@
+Base URL:http://localhost:8000/api
+
+Authentication : JWT Token
+โปรดแนบ Authorization: Bearer <token> กับทุก request ที่ต้อง login
+
+POST /register
+Request Body:
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123",
+  "password_confirmation": "password123"
+}
+Response:
+{
+  "message": "Register success",
+  "user": { "id": 1, "name": "John Doe", "email": "john@example.com" },
+  "token": "eyJ0eXAiOiJK..."
+}
+
+POST /login
+Request Body:
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+Response:
+{
+  "message": "Login success",
+  "user": { "id": 1, "name": "John Doe", "email": "john@example.com" },
+  "token": "eyJ0eXAiOiJK..."
+}
+
+GET /me
+Header: Authorization: Bearer <token> (ส่งอัตโนมัติหลัง login)
+Response:
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "john@example.com"
+}
+
+Books
+ทุก endpoint ด้านล่างนี้ต้องส่ง Authorization header
+
+

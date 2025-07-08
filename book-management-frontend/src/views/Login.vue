@@ -112,7 +112,7 @@ const login = async () => {
   try {
     error.value = null // Reset error
     const res = await API.post('/login', { email: email.value, password: password.value })
-    localStorage.setItem('token', res.data.token)
+    sessionStorage.setItem('token', res.data.token)
     router.push('/books')
   } catch (err) {
     error.value = 'อีเมลหรือรหัสผ่านไม่ถูกต้อง'
