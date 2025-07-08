@@ -67,7 +67,7 @@
                   <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
                 </svg>
               </span>
-              เข้าสู่ระบบ
+              {{ isLoading ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ" }}
             </button>
           </div>
         </form>
@@ -105,8 +105,10 @@ const email = ref('')
 const password = ref('')
 const error = ref(null)
 const router = useRouter()
+const isLoading = ref(false)
 
 const login = async () => {
+  isLoading.value = true
   try {
     error.value = null // Reset error
     const res = await API.post('/login', { email: email.value, password: password.value })
@@ -114,6 +116,8 @@ const login = async () => {
     router.push('/books')
   } catch (err) {
     error.value = 'อีเมลหรือรหัสผ่านไม่ถูกต้อง'
+  }finally {
+    isLoading.value = false
   }
 }
 </script>
