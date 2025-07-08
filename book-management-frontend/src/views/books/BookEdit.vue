@@ -6,29 +6,33 @@
       <form @submit.prevent="updateBook" class="space-y-4">
         <div>
           <label class="block text-gray-700 font-semibold">ชื่อหนังสือ</label>
-          <input v-model="form.title" type="text" class="w-full border border-gray-300 rounded px-3 py-2" required />
+          <input v-model.trim="form.title" type="text"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            required />
+
         </div>
 
         <div>
           <label class="block text-gray-700 font-semibold">ผู้เขียน</label>
-          <input v-model="form.author" type="text" class="w-full border border-gray-300 rounded px-3 py-2" required />
+          <input v-model.trim="form.author" type="text"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            required />
         </div>
 
         <div>
           <label class="block text-gray-700 font-semibold">ปีที่พิมพ์</label>
-          <input v-model="form.published_year" type="number" class="w-full border border-gray-300 rounded px-3 py-2" />
+          <input v-model="form.published_year" type="number"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
         </div>
 
         <div>
           <label class="block text-gray-700 font-semibold">ประเภท</label>
-          <input v-model="form.genre" type="text" class="w-full border border-gray-300 rounded px-3 py-2" />
+          <input v-model="form.genre" type="text"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
         </div>
 
         <div class="flex justify-between items-center">
-          <button
-            type="submit"
-            class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow"
-          >
+          <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow">
             {{ loading ? 'กำลังอัปเดต...' : 'อัปเดตข้อมูล' }}
           </button>
 
@@ -73,8 +77,22 @@ const loadBook = async () => {
 const loading = ref(false)
 
 const updateBook = async () => {
-    loading.value = true
+  loading.value = true
+  error.value = ''
+
+  // Validate
+  if (!form.value.title.trim() || !form.value.author.trim()) {
+    error.value = 'กรุณากรอกชื่อหนังสือและผู้เขียน'
+    loading.value = false
+    return
+  }
+
   try {
+    // กรณี published_year ว่างให้ส่ง null
+    if (!form.value.published_year) {
+      form.value.published_year = null
+    }
+
     await API.put(`/books/${id}`, form.value)
     router.push('/books')
   } catch (err) {
@@ -84,6 +102,7 @@ const updateBook = async () => {
     loading.value = false
   }
 }
+
 
 onMounted(() => {
   loadBook()
