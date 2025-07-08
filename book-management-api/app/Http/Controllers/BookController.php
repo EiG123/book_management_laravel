@@ -77,7 +77,7 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
 
         if ($book->user_id !== Auth::id()) {
-            return response()->json(['message' => 'ไม่ได้รับอนุญาต'], 403);
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         $book = Book::findOrFail($id);

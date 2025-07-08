@@ -2,6 +2,7 @@ Base URL:http://localhost:8000/api
 
 Authentication : JWT Token
 โปรดแนบ Authorization: Bearer <token> กับทุก request ที่ต้อง login
+ทุกครั้งที่ปิดเว็บ token จะถูกลบ จะต้อง login ใหม่
 
 POST /register
 Request Body:
@@ -41,6 +42,74 @@ Response:
 }
 
 Books
-ทุก endpoint ด้านล่างนี้ต้องส่ง Authorization header
+ทุก endpoint ด้านล่างนี้ต้องส่ง Authorization header (ส่งอัตโนมัติหลัง login)
+GET /books
+ดึงรายการหนังสือทั้งหมด
+Response:
+[
+  {
+    "id": 1,
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "published_year": 2008,
+    "genre": "Programming",
+    "user_id": 1,
+    "created_at": "...",
+    "updated_at": "..."
+  },
+  ...
+]
+
+GET /books/{id}
+ดึงรายละเอียดหนังสือ
+Response:
+{
+  "id": 1,
+  "title": "Clean Code",
+  "author": "Robert C. Martin",
+  "published_year": 2008,
+  "genre": "Programming",
+  "user_id": 1
+}
+
+POST /books
+เพิ่มหนังสือใหม่
+Request Body:
+{
+  "title": "Atomic Habits",
+  "author": "James Clear",
+  "published_year": 2018,
+  "genre": "Self-help"
+}
+Response:
+{
+  "id": 2,
+  "title": "Atomic Habits",
+  "author": "James Clear",
+  "published_year": 2018,
+  "genre": "Self-help",
+  "user_id": 1
+}
+
+PUT /books/{id}
+แก้ไขหนังสือ (เฉพาะเจ้าของ)
+Request Body:
+{
+  "title": "Atomic Habits - Updated",
+  "genre": "Motivation"
+}
+Response:
+{
+  "message": "Book updated successfully"
+}
+
+DELETE /books/{id}
+ลบหนังสือ (เฉพาะเจ้าของ)
+Response:
+{
+  "message": "Book deleted"
+}
+
+
 
 

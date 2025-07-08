@@ -19,7 +19,6 @@
         <p><span class="font-semibold">ประเภท:</span> {{ book.genre || 'ไม่ระบุ' }}</p>
         <p><span class="font-semibold">วันที่พิมพ์:</span> {{ formatDateTime(book.created_at) }}</p>
         <p><span class="font-semibold">วันที่ได้รับการอัพเดท:</span> {{ formatDateTime(book.updated_at) }}</p>
-        <p><span class="font-semibold">เขียนโดย:</span> {{ book.by || 'ไม่ระบุ' }}</p>
       </div>
 
       <div class="mt-6 flex justify-between">
